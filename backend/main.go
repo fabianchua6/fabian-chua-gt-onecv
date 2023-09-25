@@ -22,18 +22,25 @@ func main() {
 	var studentController controllers.StudentController
 
 	// teacher routes
-	router.GET("/api/teachers", teacherController.GetAllTeachers)
 	router.POST("/api/teachers", teacherController.CreateTeacher)
-	router.PATCH("/api/teachers/:id", teacherController.UpdateTeacherByID)
-	router.DELETE("/api/teachers/:id", teacherController.DeleteTeacherByID)
+	router.GET("/api/teachers", teacherController.GetAllTeachers)
+	router.PATCH("/api/teachers/:email", teacherController.UpdateTeacherByEmail)
+	router.DELETE("/api/teachers/:email", teacherController.DeleteTeacherByEmail)
+
 	router.POST("/api/retrievefornotifications", teacherController.GetNotifiedStudents)
 
 	// student routes
+	router.POST("/api/students", studentController.CreateStudent)
+	router.GET("/api/students", studentController.GetAllStudents)
+	router.PATCH("/api/students/:email", studentController.UpdateStudentByEmail)
+	router.DELETE("/api/students/:email", studentController.DeleteStudentByEmail)
+
 	router.POST("/api/suspend", studentController.SuspendStudentByEmail)
 
 	// registration routes
 	router.GET("/api/register", registrationController.GetAll)
 	router.POST("/api/register", registrationController.Create)
+
 	router.GET("/api/commonstudents", registrationController.GetByTeacherEmails)
 
 	router.Run("localhost:8080")
