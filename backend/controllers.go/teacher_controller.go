@@ -61,15 +61,14 @@ func (tc *TeacherController) GetAllTeachers(c *gin.Context) {
 	}
 }
 
-func (tc *TeacherController) UpdateTeacherByID(c *gin.Context) {
+func (tc *TeacherController) UpdateTeacherByEmail(c *gin.Context) {
 	var teacher models.Teacher
-	id := c.Param("id")
-	teacher.ID = uuid.MustParse(id)
+	teacher.Email = c.Param("email")
 	if err := c.ShouldBindJSON(&teacher); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	err := teacher.UpdateTeacherByID()
+	err := teacher.UpdateTeacherByEmail()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -77,11 +76,11 @@ func (tc *TeacherController) UpdateTeacherByID(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Teacher updated successfully"})
 }
 
-func (tc *TeacherController) DeleteTeacherByID(c *gin.Context) {
+func (tc *TeacherController) DeleteTeacherByEmail(c *gin.Context) {
 	var teacher models.Teacher
-	id := c.Param("id")
-	teacher.ID = uuid.MustParse(id)
-	err := teacher.DeleteTeacherByID()
+	teacher.Email = c.Param("email")
+
+	err := teacher.DeleteTeacherByEmail()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
