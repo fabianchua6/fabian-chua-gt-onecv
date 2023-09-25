@@ -94,11 +94,11 @@ func (sc *StudentController) SuspendStudentByEmail(c *gin.Context) {
 	c.JSON(http.StatusNoContent, gin.H{})
 }
 
-func (sc *StudentController) DeleteStudentByID(c *gin.Context) {
+func (sc *StudentController) DeleteStudentByEmail(c *gin.Context) {
 	var student models.Student
-	id := c.Param("id")
-	student.ID = uuid.MustParse(id)
-	err := student.DeleteStudentByID()
+	student.Email = c.Param("email")
+
+	err := student.DeleteStudentByEmail()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

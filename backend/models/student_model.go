@@ -69,8 +69,8 @@ func (student *Student) UpdateStudentByEmail() error {
 	return nil
 }
 
-func (student *Student) DeleteStudentByID() error {
-	if err := config.DB.Where("id = ?", student.ID).Delete(&student).Error; err != nil {
+func (student *Student) DeleteStudentByEmail() error {
+	if err := config.DB.Where("email = ?", student.Email).Delete(&student).Error; err != nil {
 		return err
 	}
 
