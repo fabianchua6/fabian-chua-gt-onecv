@@ -36,16 +36,16 @@ func (teacher *Teacher) GetAll() ([]Teacher, error) {
 	return teachers, nil
 }
 
-func (teacher *Teacher) GetTeacherByID() (*Teacher, error) {
-	if err := config.DB.First(&teacher, teacher.ID).Error; err != nil {
+func (teacher *Teacher) GetTeacherByEmail() (*Teacher, error) {
+	if err := config.DB.First(&teacher, teacher.Email).Error; err != nil {
 		return nil, err
 	}
 
 	return teacher, nil
 }
 
-func (teacher *Teacher) UpdateTeacherByID() error {
-	if err := config.DB.Model(&teacher).Where("id = ?", teacher.ID).Updates(map[string]interface{}{
+func (teacher *Teacher) UpdateTeacherByEmail() error {
+	if err := config.DB.Model(&teacher).Where("email = ?", teacher.Email).Updates(map[string]interface{}{
 		"name":  teacher.Name,
 		"email": teacher.Email,
 	}).Error; err != nil {
@@ -55,9 +55,9 @@ func (teacher *Teacher) UpdateTeacherByID() error {
 	return nil
 }
 
-// Delete teacher by id
-func (teacher *Teacher) DeleteTeacherByID() error {
-	if err := config.DB.Where("id = ?", teacher.ID).Delete(&teacher).Error; err != nil {
+// Delete teacher by Email
+func (teacher *Teacher) DeleteTeacherByEmail() error {
+	if err := config.DB.Where("email = ?", teacher.Email).Delete(&teacher).Error; err != nil {
 		return err
 	}
 
