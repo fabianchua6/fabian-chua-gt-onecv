@@ -37,7 +37,17 @@ func (student *Student) GetAll() ([]Student, error) {
 	return students, nil
 }
 
-func (student *Student) GetStudentByID() (*Student, error) {
+// check if student is suspended by email
+func (student *Student) IsSuspended() (bool, error) {
+	var suspended bool
+	if err := config.DB.Table("students").Select("suspended").Where("email = ?", student.Email).Scan(&suspended).Error; err != nil {
+		return false, err
+	}
+
+	return suspended, nil
+}
+
+func (student *Student) GetStudentByEmail() (*Student, error) {
 	if err := config.DB.First(&student, student.ID).Error; err != nil {
 		return nil, err
 	}

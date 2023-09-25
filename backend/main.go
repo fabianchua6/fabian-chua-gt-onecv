@@ -26,9 +26,9 @@ func main() {
 	router.POST("/api/teachers", teacherController.CreateTeacher)
 	router.PATCH("/api/teachers/:id", teacherController.UpdateTeacherByID)
 	router.DELETE("/api/teachers/:id", teacherController.DeleteTeacherByID)
+	router.POST("/api/retrievefornotifications", teacherController.GetNotifiedStudents)
 
 	// student routes
-	// !TODO: implement student routes
 	router.POST("/api/suspend", studentController.SuspendStudentByEmail)
 
 	// registration routes
