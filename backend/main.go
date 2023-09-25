@@ -19,7 +19,7 @@ func main() {
 	router := gin.Default()
 	var teacherController controllers.TeacherController
 	var registrationController controllers.RegistrationController
-	// var studentController controllers.StudentController
+	var studentController controllers.StudentController
 
 	// teacher routes
 	router.GET("/api/teachers", teacherController.GetAllTeachers)
@@ -29,6 +29,7 @@ func main() {
 
 	// student routes
 	// !TODO: implement student routes
+	router.POST("/api/suspend", studentController.SuspendStudentByEmail)
 
 	// registration routes
 	router.GET("/api/register", registrationController.GetAll)
