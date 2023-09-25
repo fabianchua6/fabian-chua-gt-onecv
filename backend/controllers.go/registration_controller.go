@@ -72,33 +72,3 @@ func (rc *RegistrationController) GetByTeacherEmails(c *gin.Context) {
 		c.String(http.StatusInternalServerError, err.Error())
 	}
 }
-
-// func (tc *TeacherController) UpdateTeacherByID(c *gin.Context) {
-// 	var teacher models.Teacher
-// 	id := c.Param("id")
-// 	teacher.ID = uuid.MustParse(id)
-// 	if err := c.ShouldBindJSON(&teacher); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	err := teacher.UpdateTeacherByID()
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"message": "Teacher updated successfully"})
-// }
-
-// func (tc *TeacherController) DeleteTeacherByID(c *gin.Context) {
-// 	var teacher models.Teacher
-// 	id := c.Param("id")
-// 	teacher.ID = uuid.MustParse(id)
-// 	err := teacher.DeleteTeacherByID()
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"message": "Teacher deleted successfully"})
-// }
-
-// RegisterStudents to Teacher
