@@ -29,11 +29,18 @@ func (registration *Registration) GetAll() ([]Registration, error) {
 	return registrations, nil
 }
 
-func (registration *Registration) GetRegistrationByTeacherEmail() ([]Registration, error) {
+func (registration *Registration) GetRegistrationByTeacherEmail(teacherEmails []string) ([]Registration, error) {
 	var registrations []Registration
 
-	// given a list of teachers, find students who are registered to ALL given teachers
-	if err := config.DB.Where("teacher_email IN ?", registration.TeacherEmail).Find(&registrations).Error; err != nil {
+	// Given a list of teachers, find students who are registered to ALL given teachers, not just one
+	query := config.DB.
+		Table("registrations").
+		Select("student_email").
+		Where("teacher_email IN ?", teacherEmails).
+		Group("student_email").
+		Having("COUNT(DISTINCT teacher_email) = ?", len(teacherEmails))
+
+	if err := query.Find(&registrations).Error; err != nil {
 		return nil, err
 	}
 

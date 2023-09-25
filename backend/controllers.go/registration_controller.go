@@ -48,32 +48,30 @@ func (rc *RegistrationController) GetAll(c *gin.Context) {
 	}
 }
 
-// func (rc *RegistrationController) GetByTeacherEmail(c *gin.Context) {
-// 	var registration models.Registration
+func (rc *RegistrationController) GetByTeacherEmails(c *gin.Context) {
+	var registration models.Registration
 
-// 	// take in list of teacher emails separated by & in url parameters
-// 	teacherEmails := strings.Split(c.Query("teacher_emails"), "&")
+	// take in array of parameters through query
+	teacherEmails := c.QueryArray("teacher")
 
-// 	teacherEmail := c.Param("teacher_email")
-// 	registration.TeacherEmail = teacherEmail
+	// get students from registration table WHERE IN list of teacheremails
+	registrations, err := registration.GetRegistrationByTeacherEmail(teacherEmails)
 
-// 	registrations, err := registration.GetRegistrationByTeacherEmail()
+	// transform registration to slice of student emails
+	var studentEmails []string
+	for _, registration := range registrations {
+		studentEmails = append(studentEmails, registration.StudentEmail)
+	}
 
-// 	// transform registration to slice of student emails
-// 	var studentEmails []string
-// 	for _, registration := range registrations {
-// 		studentEmails = append(studentEmails, registration.StudentEmail)
-// 	}
-
-// 	if err == nil {
-// 		c.JSON(http.StatusOK, gin.H{
-// 			// "message":  "Students registered to " + registration.TeacherEmail,
-// 			"students": studentEmails,
-// 		})
-// 	} else {
-// 		c.String(http.StatusInternalServerError, err.Error())
-// 	}
-// }
+	if err == nil {
+		c.JSON(http.StatusOK, gin.H{
+			// "message":  "Students registered to " + registration.TeacherEmail,
+			"students": studentEmails,
+		})
+	} else {
+		c.String(http.StatusInternalServerError, err.Error())
+	}
+}
 
 // func (tc *TeacherController) UpdateTeacherByID(c *gin.Context) {
 // 	var teacher models.Teacher

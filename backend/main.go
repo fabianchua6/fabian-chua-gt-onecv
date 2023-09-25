@@ -33,7 +33,7 @@ func main() {
 	// registration routes
 	router.GET("/api/register", registrationController.GetAll)
 	router.POST("/api/register", registrationController.Create)
-	// router.GET("/api/register/:teacher_email", registrationController.GetByTeacherEmail)
+	router.GET("/api/commonstudents", registrationController.GetByTeacherEmails)
 
 	router.Run("localhost:8080")
 }
