@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/config"
-	"backend/controllers.go"
+	"backend/controllers"
 	"log"
 
 	"github.com/gin-gonic/gin"

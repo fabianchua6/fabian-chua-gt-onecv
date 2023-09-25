@@ -19,14 +19,14 @@ func (rc *RegistrationController) Create(c *gin.Context) {
 	var registration models.Registration
 	var registrationReq RegistrationRequest
 	if err := c.ShouldBindJSON(&registrationReq); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
 		return
 	}
 
 	// create a new registration record with the specified teacher_email and loop through student_email
 	for _, studentEmail := range registrationReq.Students {
 		if _, err := registration.Create(studentEmail, registrationReq.Teacher); err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			StandardErrorResponse((c), http.StatusInternalServerError, err.Error())
 			return
 		}
 	}
@@ -44,7 +44,8 @@ func (rc *RegistrationController) GetAll(c *gin.Context) {
 			"registrations": registrations,
 		})
 	} else {
-		c.String(http.StatusInternalServerError, err.Error())
+		StandardErrorResponse((c), http.StatusInternalServerError, err.Error())
+		return
 	}
 }
 
@@ -65,10 +66,10 @@ func (rc *RegistrationController) GetByTeacherEmails(c *gin.Context) {
 
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
-			// "message":  "Students registered to " + registration.TeacherEmail,
 			"students": studentEmails,
 		})
 	} else {
-		c.String(http.StatusInternalServerError, err.Error())
+		StandardErrorResponse((c), http.StatusInternalServerError, err.Error())
+		return
 	}
 }

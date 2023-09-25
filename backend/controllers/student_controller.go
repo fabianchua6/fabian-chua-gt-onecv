@@ -17,7 +17,8 @@ type SuspendRequest struct {
 func (sc *StudentController) CreateStudent(c *gin.Context) {
 	var student models.Student
 	if err := c.ShouldBindJSON(&student); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
+
 		return
 	}
 
@@ -32,7 +33,7 @@ func (sc *StudentController) CreateStudent(c *gin.Context) {
 			"student": student,
 		})
 	} else {
-		c.String(http.StatusInternalServerError, err.Error())
+
 	}
 }
 
@@ -54,7 +55,8 @@ func (sc *StudentController) GetAllStudents(c *gin.Context) {
 			"students": results,
 		})
 	} else {
-		c.String(http.StatusInternalServerError, err.Error())
+		StandardErrorResponse((c), http.StatusInternalServerError, err.Error())
+		return
 	}
 }
 
@@ -62,12 +64,14 @@ func (sc *StudentController) UpdateStudentByEmail(c *gin.Context) {
 	var student models.Student
 	student.Email = c.Param("email")
 	if err := c.ShouldBindJSON(&student); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
+
 		return
 	}
 	err := student.UpdateStudentByEmail()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		StandardErrorResponse((c), http.StatusInternalServerError, err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Student updated successfully"})
@@ -79,7 +83,9 @@ func (sc *StudentController) SuspendStudentByEmail(c *gin.Context) {
 
 	// take student email from the following body
 	if err := c.ShouldBindJSON(&suspendRequest); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
+
 		return
 	}
 
@@ -87,7 +93,7 @@ func (sc *StudentController) SuspendStudentByEmail(c *gin.Context) {
 	student.Suspended = true
 
 	if err := student.UpdateStudentByEmail(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		StandardErrorResponse((c), http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -100,7 +106,7 @@ func (sc *StudentController) DeleteStudentByEmail(c *gin.Context) {
 
 	err := student.DeleteStudentByEmail()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		StandardErrorResponse((c), http.StatusInternalServerError, err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Student deleted successfully"})

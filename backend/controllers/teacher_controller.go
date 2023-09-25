@@ -20,7 +20,7 @@ type NotificationRequest struct {
 func (tc *TeacherController) CreateTeacher(c *gin.Context) {
 	var teacher models.Teacher
 	if err := c.ShouldBindJSON(&teacher); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -65,7 +65,7 @@ func (tc *TeacherController) UpdateTeacherByEmail(c *gin.Context) {
 	var teacher models.Teacher
 	teacher.Email = c.Param("email")
 	if err := c.ShouldBindJSON(&teacher); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
 		return
 	}
 	err := teacher.UpdateTeacherByEmail()
@@ -99,7 +99,9 @@ func (tc *TeacherController) GetNotifiedStudents(c *gin.Context) {
 
 	// take teacher email and notification from the following body
 	if err := c.ShouldBindJSON(&notificationRequest); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
+
 		return
 	}
 
