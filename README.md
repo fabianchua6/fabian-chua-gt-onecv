@@ -76,6 +76,10 @@ To get your development environment set up, you'll need to fork the repository a
 
 ### Database Setup 💿
 
+**ER Diagram:**
+
+![ERD](SchoolDB_ERD.png)
+
 1. **Set Credentials:** Create your `.env` file from `.env.example` and set your Postgres database credentials. The `.env` file should look something like this
 
 ```bash
