@@ -57,7 +57,7 @@ func (teacher *Teacher) UpdateTeacherByEmail() error {
 
 // Delete teacher by Email
 func (teacher *Teacher) DeleteTeacherByEmail() error {
-	if err := config.DB.Where("email = ?", teacher.Email).Delete(&teacher).Error; err != nil {
+	if err := config.DB.Unscoped().Where("email = ?", teacher.Email).Delete(&teacher).Error; err != nil {
 		return err
 	}
 
