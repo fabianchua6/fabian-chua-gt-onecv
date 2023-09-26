@@ -24,12 +24,10 @@ func (tc *TeacherController) CreateTeacher(c *gin.Context) {
 		return
 	}
 
-	// get the teacher name from the request body
 	teacher.ID = uuid.New()
-	name := c.PostForm("name")
 
 	// create a new teacher record with the specified name and email
-	if _, err := teacher.Create(teacher.Email, name); err == nil {
+	if _, err := teacher.Create(); err == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Teacher created successfully",
 			"teacher": teacher,

@@ -14,12 +14,7 @@ type Teacher struct {
 	Email string    `json:"email"`
 }
 
-func (teacher *Teacher) Create(email string, args ...string) (*Teacher, error) {
-	teacher.Email = email
-	if len(args) > 0 {
-		teacher.Name = args[0]
-	}
-
+func (teacher *Teacher) Create() (*Teacher, error) {
 	if err := config.DB.Create(&teacher).Error; err != nil {
 		return nil, err
 	}
