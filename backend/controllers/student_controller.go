@@ -18,16 +18,13 @@ func (sc *StudentController) CreateStudent(c *gin.Context) {
 	var student models.Student
 	if err := c.ShouldBindJSON(&student); err != nil {
 		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
-
 		return
 	}
 
-	// get the student name from the request body
 	student.ID = uuid.New()
-	name := c.PostForm("name")
 
 	// create a new student record with the specified name and email
-	if _, err := student.Create(student.Email, name); err == nil {
+	if _, err := student.Create(); err == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Student created successfully",
 			"student": student,

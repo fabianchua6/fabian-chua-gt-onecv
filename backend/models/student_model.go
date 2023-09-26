@@ -15,16 +15,10 @@ type Student struct {
 	Suspended bool      `json:"suspended"`
 }
 
-func (student *Student) Create(email string, args ...string) (*Student, error) {
-	student.Email = email
-	if len(args) > 0 {
-		student.Name = args[0]
-	}
-
+func (student *Student) Create() (*Student, error) {
 	if err := config.DB.Create(&student).Error; err != nil {
 		return nil, err
 	}
-
 	return student, nil
 }
 
