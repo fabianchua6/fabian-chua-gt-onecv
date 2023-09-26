@@ -41,7 +41,6 @@ The repository is structured as such:
 ├── controllers      # Request handling and response sending
 │   ├── error_controller.go
 │   ├── registration_controller.go
-│   ├── registration_controller_test.go
 │   ├── student_controller.go
 │   └── teacher_controller.go
 ├── models           # Data models and database schema
