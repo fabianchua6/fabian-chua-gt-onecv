@@ -14,8 +14,6 @@ func main() {
 		log.Println("Driver creation failed", err.Error())
 	}
 
-	//migrations.run()
-
 	router := gin.Default()
 	var teacherController controllers.TeacherController
 	var registrationController controllers.RegistrationController
@@ -24,7 +22,6 @@ func main() {
 	// teacher routes
 	router.POST("/api/teachers", teacherController.CreateTeacher)
 	router.GET("/api/teachers", teacherController.GetAllTeachers)
-	router.PATCH("/api/teachers/:email", teacherController.UpdateTeacherByEmail)
 	router.DELETE("/api/teachers/:email", teacherController.DeleteTeacherByEmail)
 
 	router.POST("/api/retrievefornotifications", teacherController.GetNotifiedStudents)
@@ -32,7 +29,6 @@ func main() {
 	// student routes
 	router.POST("/api/students", studentController.CreateStudent)
 	router.GET("/api/students", studentController.GetAllStudents)
-	router.PATCH("/api/students/:email", studentController.UpdateStudentByEmail)
 	router.DELETE("/api/students/:email", studentController.DeleteStudentByEmail)
 
 	router.POST("/api/suspend", studentController.SuspendStudentByEmail)
