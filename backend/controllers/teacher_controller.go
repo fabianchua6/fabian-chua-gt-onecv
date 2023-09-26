@@ -14,7 +14,7 @@ type TeacherController struct{}
 
 type NotificationRequest struct {
 	Teacher         string `json:"teacher" binding:"required"`
-	NotificationMsg string `json:"notification" binding:"required"`
+	NotificationMsg string `json:"notification, omitempty"`
 }
 
 func (tc *TeacherController) CreateTeacher(c *gin.Context) {
@@ -99,9 +99,7 @@ func (tc *TeacherController) GetNotifiedStudents(c *gin.Context) {
 
 	// take teacher email and notification from the following body
 	if err := c.ShouldBindJSON(&notificationRequest); err != nil {
-
 		StandardErrorResponse((c), http.StatusBadRequest, err.Error())
-
 		return
 	}
 
@@ -131,7 +129,11 @@ func (tc *TeacherController) GetNotifiedStudents(c *gin.Context) {
 
 	// add those who are registered to this teacher
 	var registration models.Registration
-	registrations, _ := registration.GetRegistrationByTeacherEmail([]string{teacherEmail})
+	registrations, err := registration.GetRegistrationByTeacherEmail([]string{teacherEmail})
+	if err != nil {
+		StandardErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve registrations")
+		return
+	}
 
 	// from registration get the student emails add add to notifiedStudents
 	for _, registration := range registrations {
@@ -146,7 +148,11 @@ func (tc *TeacherController) GetNotifiedStudents(c *gin.Context) {
 	var student models.Student
 	for i := 0; i < len(notifiedStudents); i++ {
 		student.Email = notifiedStudents[i]
-		suspended, _ := student.IsSuspended()
+		suspended, err := student.IsSuspended()
+		if err != nil {
+			StandardErrorResponse(c, http.StatusInternalServerError, "Failed to check student suspension")
+			return
+		}
 
 		if !suspended {
 			// add to new resultSet
