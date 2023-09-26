@@ -1,0 +1,439 @@
+{
+	"info": {
+		"_postman_id": "0ba1dadf-4573-4ea9-a5c0-fe101c32e8e5",
+		"name": "GovTech OneCV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28166672",
+		"_collection_link": "https://cloudy-equinox-332513.postman.co/workspace/My-Workspace~a1e3c52c-929c-4fa2-8874-09c59deb1314/collection/28166672-0ba1dadf-4573-4ea9-a5c0-fe101c32e8e5?action=share&source=collection_link&creator=28166672"
+	},
+	"item": [
+		{
+			"name": "User Stories",
+			"item": [
+				{
+					"name": "US1: Register a Student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"students\": [\"studentjon@gmail.com\", \"studenthon@gmail.com\"]\n}"
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/register",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US2: Get Common Registered Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev_url}}/api/commonstudents?teacher=teacherken%40gmail.com&teacher=teacherjoe%40gmail.com",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"commonstudents"
+							],
+							"query": [
+								{
+									"key": "teacher",
+									"value": "teacherken%40gmail.com"
+								},
+								{
+									"key": "teacher",
+									"value": "teacherjoe%40gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US3: Suspend a Student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"student\" : \"studentmary@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/suspend",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"suspend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US4: Get Notified Students",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Example 1\n\n{\n    \"teacher\": \"teacherken@gmail.com\",\n    \"notification\": \"Hello students! @studentagnes@gmail.com @studentmiche@gmail.com\"\n}\n\n// Example 2\n// {\n//     \"teacher\": \"teacherken@gmail.com\",\n//     \"notification\": \"Hello students!\"\n// }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/retrievefornotifications",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"retrievefornotifications"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher Routes",
+			"item": [
+				{
+					"name": "Create Teacher",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Test Teacher\",\n    \"email\":\"testteacher@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/teachers",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Teachers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev_url}}/api/teachers",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Teacher by Email",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dev_url}}/api/teachers/:email",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"teachers",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "teachernancy@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve for Notifications",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Example 1\n\n{\n    \"teacher\": \"teacherken@gmail.com\",\n    \"notification\": \"Hello students! @studentagnes@gmail.com @studentmiche@gmail.com\"\n}\n\n// Example 2\n// {\n//     \"teacher\": \"teacherken@gmail.com\",\n//     \"notification\": \"Hello students!\"\n// }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/retrievefornotifications",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"retrievefornotifications"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student Routes",
+			"item": [
+				{
+					"name": "Create Student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Test Student\",\n    \"email\":\"teststudent@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/students",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev_url}}/api/students",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student by Email",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/students/:email",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"students",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Suspend Student by Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"student\" : \"studentmiche@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/suspend",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"suspend"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registration Routes",
+			"item": [
+				{
+					"name": "Get All Registrations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev_url}}/api/register",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"students\": [\"studentjon@gmail.com\", \"studenthon@gmail.com\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_url}}/api/register",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Common Students by Teacher Emails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev_url}}/api/commonstudents",
+							"host": [
+								"{{dev_url}}"
+							],
+							"path": [
+								"api",
+								"commonstudents"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "dev_url",
+			"value": "http://localhost:8080"
+		}
+	]
+}
