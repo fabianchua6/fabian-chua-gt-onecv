@@ -1,5 +1,5 @@
 -- fixes uuid_generate_v4 does not exist issue
-CREATE EXTENSION NOT EXISTS "uuid-ossp"; IF
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; 
 
 -- public.students definition
 
